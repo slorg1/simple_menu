@@ -14,7 +14,7 @@ class MenuHandler(object):
         L{Menu callback<simple_menu.builders.AbstractMenuBuilder.AbstractMenuBuilder.Menu.callback>} or
         L{section callbacks<simple_menu.builders.AbstractMenuBuilder.AbstractMenuBuilder.Section.callback>} are
         invoked without parameters once the user of this menu handler L{reaches<MenuHandler.next>} the same
-        'node' (menu or section) twice in a row. This is only possible with leaf sections. The for the root
+        'node' (menu or section) twice in a row. This is only possible with leaf sections. For the root
         menu it is hit when hitting it as a lead twice in a row (MenuHandler.back twice).
 
         The descriptions of the navigation made in the contracts of this class assume a menu as follow:
