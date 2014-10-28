@@ -10,15 +10,22 @@ class PropertiesMenuBuilder(AbstractMenuBuilder):
         Implementation of a L{menu builder<simple_menu.AbstractMenuBuilder.AbstractMenuBuilder>}. Builds a
         menu hierarchy from a properties file.
 
-        The properties file is read using the C{UTF-8} encoding to attempt to accomodate with accented
+        The properties file is read using the C{UTF-8} encoding to attempt to accommodate with accented
         characters.
     """
 
     SEPARATOR = '.'
     """ Default separator (see initializer)"""
 
+    DEFAULT_SETTINGS = "default_settings"
+    """
+        Portion defining the location of the settings for the L{root menu<simple_menu.builders.
+        AbstractMenuBuilder.AbstractMenuBuilder.Menu>}.
+    """
+
     LABEL = "label"
     """ Portion of an option of a section used in the property file to setup label. """
+
     CALLBACK = "callback"
     """ Portion of an option of a section used in the property file to setup a hook for a callback. """
 
@@ -52,10 +59,11 @@ class PropertiesMenuBuilder(AbstractMenuBuilder):
         name_to_property_sep = self.__name_to_property_sep
         LABEL = PropertiesMenuBuilder.LABEL
         CALLBACK = PropertiesMenuBuilder.CALLBACK
+        DEFAULT_SETTINGS = PropertiesMenuBuilder.DEFAULT_SETTINGS
 
         for section_name in parser.sections():
-            if section_name == 'default_settings':
-                root_callback = parser.get(section_name, 'callback')
+            if section_name == DEFAULT_SETTINGS:
+                root_callback = parser.get(section_name, CALLBACK)
             else:
                 sections = collections.OrderedDict()
                 for option_str, value in parser.items(section_name):
@@ -72,6 +80,8 @@ class PropertiesMenuBuilder(AbstractMenuBuilder):
                             print u'Unknown option %s' % opt_name.encode('utf-8')
 
                 sections = tuple(AbstractMenuBuilder.Section(k, s[0], s[1], None) for k, s in sections.iteritems())
+                if not sections:
+                    raise ValueError("Not sections could be found.")
                 roots.append(AbstractMenuBuilder.Section(section_name.encode('utf-8'), None, None, sections))
 
         return AbstractMenuBuilder.Menu(tuple(roots), root_callback, 2)
