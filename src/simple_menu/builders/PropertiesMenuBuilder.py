@@ -84,7 +84,7 @@ class PropertiesMenuBuilder(AbstractMenuBuilder):
                     raise ValueError("Not sections could be found.")
                 roots.append(AbstractMenuBuilder.Section(section_name.encode('utf-8'), None, None, sections))
 
-        return AbstractMenuBuilder.Menu(tuple(roots), root_callback, 2)
+        return AbstractMenuBuilder.Menu(tuple(roots), root_callback,)
 
     def name_to_property_sep(): # @NoSelf
         def fget(self):
