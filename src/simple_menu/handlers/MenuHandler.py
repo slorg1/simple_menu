@@ -222,7 +222,8 @@ class MenuHandler(object):
         if len(self.__current_location) <= 1: # we want the menu
             return self.__menu
 
-        last_index = len(self.__current_location) - 1
+        last_index = len(self.__current_location) - 2
+
         section = self.__menu
         for idx, loc in enumerate(self.__current_location):
             section = section.sections[loc]
